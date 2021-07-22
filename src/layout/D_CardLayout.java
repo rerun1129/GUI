@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.*;
 
 public class D_CardLayout extends JFrame {
 
@@ -29,23 +30,54 @@ public class D_CardLayout extends JFrame {
         //          각각이 컨테이너 역할을 하는
         //          배치 전용 컴포넌트
 
-        JPanel card1 = new JPanel();
-        JPanel card2 = new JPanel();
-        JPanel card3 = new JPanel();
+        JPanel[] cardPan = new JPanel[3];
 
-        // 각 컴포넌트에 배경색 입히기
-        card1.setBackground(Color.ORANGE);
-        card2.setBackground(Color.GREEN);
-        card3.setBackground(Color.PINK);
 
-        // JLabel : 이름표(평범한 문자열을 표기하는 컴포넌트)
-        card1.add(new JLabel("첫번째 카드"));
-        card2.add(new JLabel("두번째 카드"));
-        card3.add(new JLabel("세번째 카드"));
+        Set set = new TreeSet();
+        for (int i = 0; true; i++) {
+            set.add((int) (Math.random() * 3) + 1);
+            if (set.size() == 3) {
+                System.out.println(set);
+                break;
+            }
+        }
 
-        add(card1);
-        add(card2);
-        add(card3);
+        Iterator iter = set.iterator(); // 목록 형태로 처리됨
+
+        for(int i= 0; i<cardPan.length; i++){
+            int obj = (int) iter.next();
+            cardPan[i] = new JPanel();
+            switch (obj){
+                case 1:
+                    // 각 컴포넌트에 배경색 입히기
+                    cardPan[i].setBackground(Color.ORANGE);
+                    break;
+                case 2:
+                    cardPan[i].setBackground(Color.PINK);
+                    break;
+                case 3:
+                    cardPan[i].setBackground(Color.GREEN);
+                    break;
+                default:
+            }
+            // JLabel : 이름표(평범한 문자열을 표기하는 컴포넌트)
+            cardPan[i].add(new JLabel((i+1)+"번째 카드"));
+            add(cardPan[i]);
+
+            int finalI = i;
+            cardPan[i].addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getButton() == 1) {
+                        // 왼쪽 클릭했느냐!
+                        cards.next(cardPan[finalI].getParent());
+                    } else if (e.getButton() == 3) {
+                        // 우클릭이냐!
+                        cards.previous(cardPan[finalI].getParent());
+                    }
+
+                }
+            });
+        }
 
         // 각 패널에 이벤트 추가하기
         // EventListener와 EventAdapter
@@ -55,51 +87,6 @@ public class D_CardLayout extends JFrame {
         // 미완성된 메소드 전부를 구현해야 하는 불편함이 있다.
         // 따라서 이를 보다 쉽게, 여러 이벤트 중 하나 등을 선택하여
         // 사용하기 위해 이벤트어댑터를 주로 사용한다.
-        card1.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getButton() == 1) {
-                    // 왼쪽 클릭했느냐!
-                    cards.next(card1.getParent());
-                } else if(e.getButton() == 3) {
-                    // 우클릭이냐!
-                    cards.previous(card1.getParent());
-                }
-
-            }
-        });
-
-        card2.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getButton() == 1) {
-                    // 왼쪽 클릭했느냐!
-                    cards.next(card2.getParent());
-                } else if(e.getButton() == 3) {
-                    // 우클릭이냐!
-                    cards.previous(card2.getParent());
-                }
-
-            }
-        });
-
-        card3.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getButton() == 1) {
-                    // 왼쪽 클릭했느냐!
-                    cards.next(card3.getParent());
-                } else if(e.getButton() == 3) {
-                    // 우클릭이냐!
-                    cards.previous(card3.getParent());
-                }
-
-            }
-        });
-
 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
