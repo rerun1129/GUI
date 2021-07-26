@@ -1,9 +1,6 @@
 package container;
 
-import layout.A_BorderLayout;
-import layout.B_FlowLayout;
-import layout.C_GridLayout;
-import layout.D_CardLayout;
+import layout.*;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,7 +14,9 @@ public class Main {
         //A_BorderLayout b = new A_BorderLayout();
         //B_FlowLayout f = new B_FlowLayout();
         //new C_GridLayout();
-        new D_CardLayout();
-
+        //new D_CardLayout();
+        //new E_GridBagLayout();
+        //new F_AbsoluteLayout();
+        new G_PanelLayout();
     }
 }
