@@ -11,7 +11,7 @@ public class ComboBoxTest extends JFrame {
     public ComboBoxTest() {
         super("콤보박스 테스트");
 
-        String[] item = { "cat", "dog", "tiger", "user" };  //지금 이미지 폴더의 파일이름과 연동되어있음.
+        String[] item = { "sip", "Batta", "what", "wow" };  //지금 이미지 폴더의 파일이름과 연동되어있음.
 
         JComboBox itemList = new JComboBox(item);
 
@@ -29,7 +29,7 @@ public class ComboBoxTest extends JFrame {
 
                 String filename = (String) box.getSelectedItem();
 
-                Image myImg = new ImageIcon("images/"+filename+".PNG").getImage().
+                Image myImg = new ImageIcon("images/"+filename+".gif").getImage().
                         getScaledInstance(150,150,DO_NOTHING_ON_CLOSE);
                 label.setIcon(new ImageIcon(myImg));
             }
