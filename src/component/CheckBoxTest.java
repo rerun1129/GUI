@@ -1,6 +1,8 @@
 package component;
 
 import java.awt.BorderLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -31,12 +33,42 @@ public class CheckBoxTest extends JFrame {
 
         JLabel label = new JLabel("과일을 선택해주세요!");
 
+        // 과일을 선택할 경우 label 내용 변경하기
+        for(int i = 0 ; i < box.length ; i++) {
+            box[i].addItemListener(new ItemListener() {
+
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    // v 로 체크하면 true, 아니면 false
+                    // isSelected()
+
+                    String str = "";
+                    int cnt = 0; // 체크한 과일 수
+
+                    for(int j = 0; j < box.length; j++) {
+                        if(box[j].isSelected()) {
+                            str += box[j].getText() + " ";
+
+                            cnt++;
+                        }
+                    }
+
+                    if(cnt == 0) {
+                        str = "과일을 선택해주세요!";
+                    }
+
+                    label.setText(str);
+                }
+            });
+        }
+
         setLayout(new BorderLayout());
 
         add(pan, "Center");
         add(label, "South");
 
-        setBounds(300, 300, 500, 600);
+        // 현재 컴포넌트들 기준으로 크기를 자동으로 맞춰주는 메소드
+        pack();
 
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
